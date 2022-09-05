@@ -1,9 +1,16 @@
 import express from 'express'
+import connection from '../database/connection.js'
 
 const taskRouter = express.Router()
 
-taskRouter.get('/getAll', (req, res) => {
-    res.send('Here you will se all tasks')
+taskRouter.get('/getAll', (_req, res) => {
+    connection.query('SELECT * FROM user', (err, rows) => {
+        if (!err) {
+            res.send(rows)
+        } else {
+            throw err
+        }
+    })
 })
 
 taskRouter.get('/getOne/:id', (req, res) => {
